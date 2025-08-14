@@ -3,6 +3,7 @@ package com.dailytree;
 import com.google.inject.Provides;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +21,9 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
+
+import com.dailytree.overlay.PatchReadyOverlay;
 
 @Slf4j
 @PluginDescriptor(
@@ -32,6 +36,12 @@ public class DailyTreeRunsPlugin extends Plugin
 
         @Inject
         private DailyTreeRunsConfig config;
+
+        @Inject
+        private OverlayManager overlayManager;
+
+        @Inject
+        private PatchReadyOverlay overlay;
 
         /**
          * Tracks the next time a patch will be ready to harvest.
@@ -52,12 +62,14 @@ public class DailyTreeRunsPlugin extends Plugin
         protected void startUp() throws Exception
         {
                 log.info("Daily Tree Runs started!");
+                overlayManager.add(overlay);
         }
 
 	@Override
         protected void shutDown() throws Exception
         {
                 log.info("Daily Tree Runs stopped!");
+                overlayManager.remove(overlay);
                 patchReadyTimes.clear();
                 notified.clear();
                 runNotified = false;
@@ -99,6 +111,13 @@ public class DailyTreeRunsPlugin extends Plugin
                         notified.remove(patch);
                         runNotified = false;
                 }
+                else
+                {
+                        // Patch cleared or unplanted
+                        patchReadyTimes.remove(patch);
+                        notified.remove(patch);
+                        runNotified = false;
+                }
         }
 
         @Subscribe
@@ -131,12 +150,17 @@ public class DailyTreeRunsPlugin extends Plugin
                 return configManager.getConfig(DailyTreeRunsConfig.class);
         }
 
+        public Map<TreePatch, Instant> getPatchReadyTimes()
+        {
+                return Collections.unmodifiableMap(patchReadyTimes);
+        }
+
         /**
          * Enumeration of tree patches that we track. Each patch knows its world location, varbit id
          * and the value that represents a fully grown tree. Growth times are simplified to a flat
          * eight hours which is sufficient for daily run tracking.
          */
-        private enum TreePatch
+        public enum TreePatch
         {
                 VARROCK(new WorldPoint(3213, 3459, 0), 4771, 3, Duration.ofHours(8)),
                 FALADOR(new WorldPoint(3006, 3374, 0), 4772, 3, Duration.ofHours(8)),

@@ -12,8 +12,18 @@ public interface DailyTreeRunsConfig extends Config
 		name = "Welcome Greeting",
 		description = "The message to show to the user when they login"
 	)
-	default String greeting()
-	{
-		return "Hello";
-	}
+        default String greeting()
+        {
+                return "Hello";
+        }
+
+        @ConfigItem(
+                keyName = "showOverlay",
+                name = "Show overlay",
+                description = "Display an overlay for ready tree patches"
+        )
+        default boolean showOverlay()
+        {
+                return true;
+        }
 }

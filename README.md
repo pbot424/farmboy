@@ -1,2 +1,2 @@
-# Example
-An example greeter plugin
+# Daily Tree Runs
+A plugin to help with daily tree runs

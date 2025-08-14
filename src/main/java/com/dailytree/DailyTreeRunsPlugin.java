@@ -162,9 +162,12 @@ public class DailyTreeRunsPlugin extends Plugin
          */
         public enum TreePatch
         {
-                VARROCK(new WorldPoint(3213, 3459, 0), 4771, 3, Duration.ofHours(8)),
-                FALADOR(new WorldPoint(3006, 3374, 0), 4772, 3, Duration.ofHours(8)),
-                TAVERLEY(new WorldPoint(2936, 3438, 0), 4773, 3, Duration.ofHours(8));
+               VARROCK(new WorldPoint(3213, 3459, 0), 4771, 3, Duration.ofHours(8)),
+               FALADOR(new WorldPoint(3006, 3374, 0), 4772, 3, Duration.ofHours(8)),
+               TAVERLEY(new WorldPoint(2936, 3438, 0), 4773, 3, Duration.ofHours(8)),
+               LUMBRIDGE(new WorldPoint(3190, 3233, 0), 4774, 3, Duration.ofHours(8)),
+               GNOME_STRONGHOLD(new WorldPoint(2434, 3418, 0), 4775, 3, Duration.ofHours(8)),
+               GNOME_VILLAGE(new WorldPoint(2488, 3446, 0), 7904, 3, Duration.ofHours(8));
 
                 private final WorldPoint location;
                 private final int varbit;

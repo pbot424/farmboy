@@ -1,2 +1,4 @@
-# Example
-An example greeter plugin
+# Daily Tree Runs
+
+A RuneLite plugin for tracking daily tree runs.
+

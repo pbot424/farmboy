@@ -1,2 +1,1 @@
-# Daily Tree Runs
-A plugin to help with daily tree runs
+A RuneLite plugin for tracking daily tree runs.
